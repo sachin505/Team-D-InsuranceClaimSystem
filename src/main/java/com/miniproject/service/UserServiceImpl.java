@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void createClaim(String claimReason, String accidentLocationStreet, String accidentCity, String accidentState,
-			int accidentZip, String claimType, int policyNumber) {
+		int accidentZip, String claimType, int policyNumber) {
 		int claimNumber=(int)(Math.random()*(1500-500+1)+500);
 		Claim claimObj=new Claim(claimNumber,claimReason,accidentLocationStreet, accidentCity,accidentState, accidentZip,claimType,policyNumber);
 		userRoledaoImpl.createClaim(claimObj);
@@ -46,6 +46,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int getAccountNumber(String username) {
 		return userRoledaoImpl.getAccountNumByUserName(username);	
+	}
+
+	@Override
+	public void getClaim(int policyNum) {
+		Claim claim = userRoledaoImpl.getClaim(policyNum);
+		System.out.println(claim);
 	}
 
 	

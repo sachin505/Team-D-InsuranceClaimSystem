@@ -1,16 +1,19 @@
 package com.miniproject.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="Account")
 public class Account {
 	@Id
+	@Column(name = "ACCOUNTNUMBER")
 	private int accountNumber;
+	@Column(name = "USERNAME")
 	private String userName;
+	@Column(name = "AGENTNAME")
 	private String agentName;
 	
 	public int getAccountNumber() {

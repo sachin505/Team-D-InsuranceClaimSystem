@@ -6,4 +6,5 @@ public interface UserService {
 	public abstract void createClaim(String claimReason, String accidentLocation, String accidentCity, String accidentState,
 			int accidentZip, String claimType, int policyNumber);
 	public abstract int getAccountNumber(String username);
+	public abstract void getClaim(int policyNum);
 }

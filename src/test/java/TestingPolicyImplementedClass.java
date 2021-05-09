@@ -1,8 +1,10 @@
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+//import org.junit.jupiter.api.Test;
 
 import com.miniproject.dao.PolicyImplemented;
 import com.miniproject.entities.Policy;
@@ -20,8 +22,8 @@ class TestingPolicyImplementedClass {
 	void testViewPolicyDetails() {
 		PolicyImplemented pimpl= new PolicyImplemented();
 		Policy policy=new Policy();
-		List list<Policy>;
-		assertEquals(list,pimpl.viewPolicies());
+//		List list<Policy>;
+//		assertEquals(list,pimpl.viewPolicies());
 	}
 	
 }

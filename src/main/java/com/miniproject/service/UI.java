@@ -10,6 +10,7 @@ import com.miniproject.service.UserServiceImpl;
 
 public class UI {
 	UserService userServiceImpl =new UserServiceImpl();
+	AgentService agentServiceObj = new AgentServiceImpl();
 	Scanner scan=new Scanner(System.in);
 	public void welcomeMessage() {
 		System.out.println("*************** Welcome to Online Insurance Claim Registration System **************");
@@ -44,27 +45,37 @@ public class UI {
 		int result=userServiceImpl.userLogin(username, password, userrole);
 		if(result==1) {
 			System.out.println("Welcome "+username);
-			System.out.println("choose any from below");
-			System.out.println("1.Create Claim 2.view Claim Status");
-			userFunctionalities(scan.nextInt(),username);	
+			if(userrole.equals("Insured")) {
+				System.out.println("choose any from below");
+				System.out.println("1.Create Claim 2.View Claim Status");
+				insuredFunctionalities(scan.nextInt(),username);
+			}
+			else if(userrole.equals("Agent")) {
+				System.out.println("choose any from below");
+				System.out.println("1.Create Claim for their customer 2.View Customer's Claims");
+				agentFunctionalities(scan.nextInt(),username);
+			}
+				
 		}
 		else {
 			System.out.println("Login Failed please check your username and password");
 		}
 		
 	}
-	public void userFunctionalities(int choice,String username) {
+	public void insuredFunctionalities(int choice,String username) {
+		int accountNumber = 0;
+		int policyNumber = 0;
 		if(choice==1) {
-			 System.out.println("Your Account number is "+userServiceImpl.getAccountNumber(username));
-			int accountNumber=userServiceImpl.getAccountNumber(username);
-			int policyNumber=userServiceImpl.userPolicyNumber(accountNumber);
-			getDetails(policyNumber);
+			System.out.println("Your Account number is "+userServiceImpl.getAccountNumber(username));
+			accountNumber=userServiceImpl.getAccountNumber(username);
+			policyNumber=userServiceImpl.userPolicyNumber(accountNumber);
+			noteClaimDetailsForInsured(policyNumber);
 		}
 		else if(choice==2) {
-			
+			userServiceImpl.getClaim(policyNumber);
 		}
 	}
-	public void getDetails(int policyNumber) {
+	public void noteClaimDetailsForInsured(int policyNumber) {
 		String claimReason=null;
 		String accidentLocationStreet=null;
 		String accidentCity=null;
@@ -83,9 +94,19 @@ public class UI {
 		System.out.println("Please Enter your AccidentZip");
 		accidentZip=Integer.parseInt(scan.next());
 		System.out.println("Please Enter your claimType");
-		accidentLocationStreet=scan.next();
+		claimType=scan.next();
 		userServiceImpl.createClaim(claimReason, accidentLocationStreet, accidentCity, accidentState, accidentZip, claimType, policyNumber);
-		
-		
 	}
+
+	//COMPLETE OF INSURED FUNCTIONALITIES......................
+	//BEGIN OF AGENT FUNCTIONALITIES..............
+	private void agentFunctionalities(int choice, String agentName) {
+		if(choice==1) {
+			//Create Claim for their customer
+		}
+		else if(choice==2) {
+			agentServiceObj.getAllCustomers(agentName);
+		}
+	}
+	
 }

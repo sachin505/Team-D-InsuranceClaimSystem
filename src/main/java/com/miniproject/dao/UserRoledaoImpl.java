@@ -73,5 +73,18 @@ public class UserRoledaoImpl implements UserRoledao{
 			}
 		return account.getAccountNumber();
 	}
+	@Override
+	public Claim getClaim(int policyNumber) {
+		Claim claim = null;
+		try {
+			Query query = em.createQuery("select claim from Claim claim where claim.policynumber = :pnum");
+			query.setParameter("pnum", policyNumber);
+			claim = (Claim) query.getSingleResult();
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+		return claim;
+	}
 	
 }

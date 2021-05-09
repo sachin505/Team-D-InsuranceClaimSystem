@@ -29,7 +29,6 @@ public class Client {
 		ui.welcomeMessage();
 		ui.loginUser();
 		
-		
 	}
 
 }

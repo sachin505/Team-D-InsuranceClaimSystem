@@ -18,7 +18,9 @@ public class Claim {
 	private String claimType;
 	private int policyNumber;
 	
-	
+	public Claim() {
+		
+	}
 	
 	public Claim(int claimNumber, String claimReason, String accidentLocationStreet, String accidentCity,
 			String accidentState, int accidentZip, String claimType, int policyNumber) {
