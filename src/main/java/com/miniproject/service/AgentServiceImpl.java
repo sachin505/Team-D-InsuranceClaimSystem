@@ -17,7 +17,7 @@ public class AgentServiceImpl implements AgentService{
 	
 	@Override
 	public void getAllCustomers(String agentName) {
-		int accNum = agentDaoObj.getAccountNumByUserName(agentName);
+		int accNum = agentDaoObj.getAccountNumByAgentName(agentName);
 //		for(Account acc : accountList) {
 //			System.out.print(acc.getAccountNumber()+" ");
 //			System.out.print(acc.getUserName()+" ");

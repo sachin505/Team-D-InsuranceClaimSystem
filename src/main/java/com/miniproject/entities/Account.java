@@ -9,11 +9,8 @@ import javax.persistence.Table;
 @Table(name="Account")
 public class Account {
 	@Id
-	@Column(name = "ACCOUNTNUMBER")
 	private int accountNumber;
-	@Column(name = "USERNAME")
 	private String userName;
-	@Column(name = "AGENTNAME")
 	private String agentName;
 	
 	public int getAccountNumber() {
