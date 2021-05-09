@@ -11,5 +11,5 @@ public interface UserRoledao {
 	public abstract int userPolicyNumber(int accNum);
 	public void createClaim(Claim claim);
 	public int getAccountNumByUserName(String username);
-	public abstract Claim getClaim(int policyNumber);
+	public abstract Claim getClaim(int policyNumber) throws Exception;
 }

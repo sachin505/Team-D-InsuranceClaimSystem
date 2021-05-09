@@ -72,6 +72,8 @@ public class UI {
 			noteClaimDetailsForInsured(policyNumber);
 		}
 		else if(choice==2) {
+			accountNumber=userServiceImpl.getAccountNumber(username);
+			policyNumber=userServiceImpl.userPolicyNumber(accountNumber);
 			userServiceImpl.getClaim(policyNumber);
 		}
 	}

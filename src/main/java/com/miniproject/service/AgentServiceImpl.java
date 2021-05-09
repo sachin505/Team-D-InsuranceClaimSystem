@@ -17,14 +17,14 @@ public class AgentServiceImpl implements AgentService{
 	
 	@Override
 	public void getAllCustomers(String agentName) {
-		List<Account> accountList = agentDaoObj.displayAllAccounts(agentName);
-		System.out.println(accountList.size());
-		for(Account acc : accountList) {
-			System.out.print(acc.getAccountNumber()+" ");
-			System.out.print(acc.getUserName()+" ");
-			System.out.print(acc.getAgentName()+" ");
-			System.out.println();
-		}
+		int accNum = agentDaoObj.getAccountNumByUserName(agentName);
+//		for(Account acc : accountList) {
+//			System.out.print(acc.getAccountNumber()+" ");
+//			System.out.print(acc.getUserName()+" ");
+//			System.out.print(acc.getAgentName()+" ");
+//			System.out.println();
+//		}
+		System.out.println(accNum);
 	}
 
 }

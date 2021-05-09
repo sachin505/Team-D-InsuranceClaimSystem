@@ -15,7 +15,7 @@ public class Policy {
 	@Id
 	private int policyNumber;
 	private String policyPremium;
-	private int accountnumber;
+	private int accountNumber;
 
 	public int getPolicyNumber() {
 		return policyNumber;
@@ -31,15 +31,15 @@ public class Policy {
 		this.policyPremium = policyPermium;
 	}
 	public int getAccountnumber() {
-		return accountnumber;
+		return accountNumber;
 	}
 	public void setAccountnumber(int accountnumber) {
-		this.accountnumber = accountnumber;
+		this.accountNumber = accountnumber;
 	}
 	@Override
 	public String toString() {
 		return "Policy [policyNumber=" + policyNumber + ", policyPermium=" + policyPremium + ", accountnumber="
-				+ accountnumber + "]";
+				+ accountNumber + "]";
 	}
 	
 

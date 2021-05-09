@@ -3,6 +3,7 @@ package com.miniproject.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import com.miniproject.entities.Account;
@@ -45,7 +46,7 @@ public class UserRoledaoImpl implements UserRoledao{
 	public int userPolicyNumber(int accNum) {
 		Policy policynumber=null;
 		try {
-			Query query=em.createQuery("select policy from Policy policy where policy.accountnumber=:accountnumber");
+			Query query=em.createQuery("select policy from Policy policy where policy.accountNumber=:accountnumber");
 			query.setParameter("accountnumber",accNum);
 			 policynumber= (Policy) query.getSingleResult();
 			}
@@ -74,10 +75,10 @@ public class UserRoledaoImpl implements UserRoledao{
 		return account.getAccountNumber();
 	}
 	@Override
-	public Claim getClaim(int policyNumber) {
+	public Claim getClaim(int policyNumber)throws Exception,NoResultException {
 		Claim claim = null;
 		try {
-			Query query = em.createQuery("select claim from Claim claim where claim.policynumber = :pnum");
+			Query query = em.createQuery("select claim from Claim claim where claim.policyNumber = :pnum");
 			query.setParameter("pnum", policyNumber);
 			claim = (Claim) query.getSingleResult();
 		}

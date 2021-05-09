@@ -46,13 +46,13 @@ public class AgentDaoImpl implements AgentDao {
 		List<Account> accountList = null;
 		try {
 			System.out.println("in try "+agentName);
-			Query query = em.createQuery("select account from Account account where account.AGENTNAME = :agentname");
+			Query query = em.createQuery("select account from Account account where account.agentName = :name");
 			System.out.println("in try "+agentName);
-			query.setParameter("agentname", agentName);
+			query.setParameter("name", agentName);
 			accountList = query.getResultList();
 		}
 		catch(Exception e) {
-			System.out.println(e);
+			System.out.println(e.getMessage());
 		}
 		return accountList;
 	}

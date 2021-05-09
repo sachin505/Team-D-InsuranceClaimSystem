@@ -2,6 +2,8 @@ package com.miniproject.service;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import com.miniproject.dao.UserRoledao;
 import com.miniproject.dao.UserRoledaoImpl;
 import com.miniproject.entities.Claim;
@@ -49,9 +51,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void getClaim(int policyNum) {
+	public void getClaim(int policyNum) throws NoResultException {
+		try {
 		Claim claim = userRoledaoImpl.getClaim(policyNum);
-		System.out.println(claim);
+		System.out.println("ClaimNumber "+claim.getClaimNumber());
+		System.out.println("ClaimReason "+claim.getClaimReason());
+		System.out.println("Accident Location "+claim.getAccidentLocation());
+		System.out.println("Accident City "+claim.getAccidentCity());
+		System.out.println("Accident State "+claim.getAccidentState());
+		System.out.println("Accident Zip "+claim.getAccidentZip());
+		System.out.println("Claim Type "+claim.getClaimType());
+		System.out.println("Policy Number "+claim.getPolicyNumber());
+		}
+		 
+		catch (Exception e) {
+		System.out.println("No Claim Generated for your Policy ");
+		}
 	}
 
 	
