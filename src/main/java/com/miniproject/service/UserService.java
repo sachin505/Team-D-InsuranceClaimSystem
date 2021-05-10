@@ -7,4 +7,5 @@ public interface UserService {
 			int accidentZip, String claimType, int policyNumber);
 	public abstract int getAccountNumber(String username);
 	public abstract void getClaim(int policyNum);
+	public abstract int getAgentName(String customerName, String agentName);
 }

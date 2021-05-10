@@ -69,6 +69,18 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public int getAgentName(String customerName, String agentName) {
+		String agentOfDb=userRoledaoImpl.getAgentName(customerName);
+		if(agentName.equals(agentOfDb)) {
+			return 1;
+		}
+		else {
+		return 0;
+	}
+}
+	
+
 	
 
 }

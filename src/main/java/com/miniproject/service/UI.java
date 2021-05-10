@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import com.miniproject.dao.UserRoledao;
 import com.miniproject.dao.UserRoledaoImpl;
+import com.miniproject.entities.Claim;
 import com.miniproject.service.UserService;
 import com.miniproject.service.UserServiceImpl;
 
@@ -58,7 +59,7 @@ public class UI {
 				
 		}
 		else {
-			System.out.println("Login Failed please check your username and password");
+			System.out.println("Login Failed please check your username, password and UserRole");
 		}
 		
 	}
@@ -105,10 +106,27 @@ public class UI {
 	private void agentFunctionalities(int choice, String agentName) {
 		if(choice==1) {
 			//Create Claim for their customer
+			
+			System.out.println("Please Enter your Customer's  Username");
+			String username=scan.next();
+			 int result=userServiceImpl.getAgentName(username,agentName);
+			 if(result==1) {
+				 System.out.println("yes he is your Customer you are good to go");
+				 int accountNumber=userServiceImpl.getAccountNumber(username);
+				 int PolicyNumber=userServiceImpl.userPolicyNumber(accountNumber);
+				 userServiceImpl.getClaim(PolicyNumber);
+				 
+			 }
+			 else {
+				 System.out.println("no he is not your Customer");
+			 }
+			
 		}
 		else if(choice==2) {
 			agentServiceObj.getAllCustomers(agentName);
-		}
+		}else {
+			System.out.println("Please Choose Proper option");
 	}
 	
+}
 }

@@ -12,4 +12,5 @@ public interface UserRoledao {
 	public void createClaim(Claim claim);
 	public int getAccountNumByUserName(String username);
 	public abstract Claim getClaim(int policyNumber) throws Exception;
+	public abstract String getAgentName(String customerName);
 }

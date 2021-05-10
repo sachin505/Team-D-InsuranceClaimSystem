@@ -87,5 +87,18 @@ public class UserRoledaoImpl implements UserRoledao{
 		}
 		return claim;
 	}
+	@Override
+	public String getAgentName(String customerName) {
+		 Account account=null;
+			try {
+				Query query=em.createQuery("select account from Account account where account.userName=:usn");
+				query.setParameter("usn",customerName);
+				account=(Account)query.getSingleResult();
+				}
+				catch(Exception e) {
+					System.out.println(e);
+				}
+			return account.getAgentName();
+	}
 	
 }
