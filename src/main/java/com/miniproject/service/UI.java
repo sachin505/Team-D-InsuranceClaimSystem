@@ -11,7 +11,6 @@ import com.miniproject.service.UserServiceImpl;
 
 public class UI {
 	UserService userServiceImpl =new UserServiceImpl();
-	AgentService agentServiceObj = new AgentServiceImpl();
 	Scanner scan=new Scanner(System.in);
 	public void welcomeMessage() {
 		System.out.println("*************** Welcome to Online Insurance Claim Registration System **************");
@@ -56,6 +55,13 @@ public class UI {
 				System.out.println("1.Create Claim for their customer 2.View Customer's Claims");
 				agentFunctionalities(scan.nextInt(),username);
 			}
+			else {
+				System.out.println("choose any from below");
+				System.out.println("1.Generate Claim Report 2.Create Role");
+				
+				
+			}
+			
 				
 		}
 		else {
@@ -103,7 +109,7 @@ public class UI {
 
 	//COMPLETE OF INSURED FUNCTIONALITIES......................
 	//BEGIN OF AGENT FUNCTIONALITIES..............
-	private void agentFunctionalities(int choice, String agentName) {
+	public void agentFunctionalities(int choice, String agentName) {
 		 int accountNumber=0;
 		 int policyNumber=0;
 		 int isClaimPresent=0;
@@ -154,5 +160,11 @@ public class UI {
 			System.out.println("Please Choose Proper option");
 	}
 	
+}//END OF AGENT FUNCTIONALITY
+//BEGIN OF ADMIN FUNCTIONALITY
+	public void AdminFunctionality() {
+		
+	}
 }
-}
+
+

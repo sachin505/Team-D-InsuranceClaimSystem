@@ -3,8 +3,6 @@ package com.miniproject.pl;
 import java.util.List;
 
 import com.miniproject.dao.JPAUtil;
-import com.miniproject.dao.PolicyDetailsImpl;
-import com.miniproject.dao.PolicyImplemented;
 import com.miniproject.dao.UserRoledaoImpl;
 import com.miniproject.dao.UserRoledao;
 import com.miniproject.entities.Policy;
