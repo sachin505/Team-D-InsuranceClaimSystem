@@ -8,4 +8,5 @@ public interface UserService {
 	public abstract int getAccountNumber(String username);
 	public abstract void getClaim(int policyNum);
 	public abstract int getAgentName(String customerName, String agentName);
+	public abstract int checkForClaim(int policyNumber);
 }

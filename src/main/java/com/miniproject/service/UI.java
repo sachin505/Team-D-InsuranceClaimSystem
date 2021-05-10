@@ -104,17 +104,29 @@ public class UI {
 	//COMPLETE OF INSURED FUNCTIONALITIES......................
 	//BEGIN OF AGENT FUNCTIONALITIES..............
 	private void agentFunctionalities(int choice, String agentName) {
+		 int accountNumber=0;
+		 int policyNumber=0;
+		 int isClaimPresent=0;
 		if(choice==1) {
 			//Create Claim for their customer
 			
 			System.out.println("Please Enter your Customer's  Username");
 			String username=scan.next();
 			 int result=userServiceImpl.getAgentName(username,agentName);
+			
 			 if(result==1) {
-				 System.out.println("yes he is your Customer you are good to go");
-				 int accountNumber=userServiceImpl.getAccountNumber(username);
-				 int PolicyNumber=userServiceImpl.userPolicyNumber(accountNumber);
-				 userServiceImpl.getClaim(PolicyNumber);
+				  accountNumber=userServiceImpl.getAccountNumber(username);
+				  policyNumber=userServiceImpl.userPolicyNumber(accountNumber);
+				  isClaimPresent=userServiceImpl.checkForClaim(policyNumber);
+				 if(isClaimPresent==1) {
+					 System.out.println("Customer with username : "+username+" having Account Number : "+accountNumber+" Policy Number : "+policyNumber);
+					 System.out.println("The Claim Already Exists ");
+					 userServiceImpl.getClaim(policyNumber); 
+				 }
+				 else {
+					 noteClaimDetailsForInsured(policyNumber);
+				 }
+				 
 				 
 			 }
 			 else {
@@ -123,7 +135,21 @@ public class UI {
 			
 		}
 		else if(choice==2) {
-			agentServiceObj.getAllCustomers(agentName);
+			System.out.println("Please Enter your Customer's  Username");
+			String username=scan.next();
+			 accountNumber=userServiceImpl.getAccountNumber(username);
+			 policyNumber=userServiceImpl.userPolicyNumber(accountNumber);
+			 System.out.println("Customer with username : "+username+" having Account Number : "+accountNumber+" Policy Number : "+policyNumber);
+			 isClaimPresent=userServiceImpl.checkForClaim(policyNumber);
+			 if(isClaimPresent==1) {
+				 userServiceImpl.getClaim(policyNumber);
+			 }
+			 else {
+				 System.out.println("There is no Claim Generated");
+			 }
+			  
+			 
+			
 		}else {
 			System.out.println("Please Choose Proper option");
 	}

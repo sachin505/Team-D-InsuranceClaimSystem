@@ -79,6 +79,12 @@ public class UserServiceImpl implements UserService {
 		return 0;
 	}
 }
+
+	@Override
+	public int checkForClaim(int policyNumber) {
+		return userRoledaoImpl.checkForClaim(policyNumber);
+		 
+	}
 	
 
 	

@@ -95,10 +95,30 @@ public class UserRoledaoImpl implements UserRoledao{
 				query.setParameter("usn",customerName);
 				account=(Account)query.getSingleResult();
 				}
+			
 				catch(Exception e) {
 					System.out.println(e);
 				}
 			return account.getAgentName();
+	}
+	@Override
+	public int checkForClaim(int policyNumber) {
+		Claim claim = null;
+		int isPresent=0;
+		try {
+			Query query = em.createQuery("select claim from Claim claim where claim.policyNumber = :pnum");
+			query.setParameter("pnum", policyNumber);
+			claim = (Claim) query.getSingleResult();
+			isPresent=1;
+		}
+		catch(NoResultException e) {
+			isPresent=0;
+		}
+		catch(Exception e) {
+			isPresent=0;
+		}
+		
+		return isPresent;
 	}
 	
 }
