@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import com.miniproject.entities.Account;
 import com.miniproject.entities.Claim;
 import com.miniproject.entities.Policy;
+import com.miniproject.entities.PolicyDetails;
 import com.miniproject.entities.UserRole;
 
 public class UserRoledaoImpl implements UserRoledao{
@@ -119,6 +120,45 @@ public class UserRoledaoImpl implements UserRoledao{
 		}
 		
 		return isPresent;
+	}
+	@Override
+	public List<Claim> getAllClaims() {
+		List<Claim> claimsList=null;
+		Query query=em.createQuery("select claim from Claim claim");
+		claimsList=query.getResultList();
+		return claimsList;
+	}
+	@Override
+	public List<Account> getCustomersByAgent(String agentName) {
+		List<Account> customersList=null;
+		try {
+			Query query = em.createQuery("select account from Account account where account.agentName = :agentName");
+			query.setParameter("agentName", agentName);
+			customersList =query.getResultList();
+		}
+		catch(NoResultException e) {
+		System.out.println(e);
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+		return customersList;
+	}
+	@Override
+	public List<PolicyDetails> getPolicyDetails(int policyNumber) {
+		List<PolicyDetails> policyDetails=null;
+		try {
+			Query query = em.createQuery("select policydetails from PolicyDetails policydetails where policydetails.policyNumber = :policyNumber");
+			query.setParameter("policyNumber",policyNumber);
+			policyDetails =query.getResultList();
+		}
+		catch(NoResultException e) {
+		System.out.println(e);
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+		return policyDetails;
 	}
 	
 }

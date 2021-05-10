@@ -10,7 +10,7 @@ import com.miniproject.entities.PolicyDetails;
 import com.miniproject.entities.UserRole;
 import com.miniproject.exception.PolicyDetailsException;
 import com.miniproject.exception.PolicyException;
-import com.miniproject.service.UI;
+import com.miniproject.service.UserInterFace;
 
 public class Client {
 
@@ -23,7 +23,7 @@ public class Client {
 //			}
 //		}
 		
-		UI ui=new UI();
+		UserInterFace ui=new UserInterFace();
 		ui.welcomeMessage();
 		ui.loginUser();
 		

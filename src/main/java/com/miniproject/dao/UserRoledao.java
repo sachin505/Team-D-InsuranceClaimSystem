@@ -2,7 +2,9 @@ package com.miniproject.dao;
 
 import java.util.List;
 
+import com.miniproject.entities.Account;
 import com.miniproject.entities.Claim;
+import com.miniproject.entities.PolicyDetails;
 import com.miniproject.entities.UserRole;
 
 public interface UserRoledao {
@@ -14,4 +16,7 @@ public interface UserRoledao {
 	public abstract Claim getClaim(int policyNumber) throws Exception;
 	public abstract String getAgentName(String customerName);
 	public abstract int  checkForClaim(int policyNumber);
+	public abstract List<Claim> getAllClaims();
+	public abstract List<Account> getCustomersByAgent(String agentName);
+	public abstract List<PolicyDetails> getPolicyDetails(int policyNumber);
 }

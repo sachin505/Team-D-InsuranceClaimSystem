@@ -9,7 +9,7 @@ import com.miniproject.entities.Claim;
 import com.miniproject.service.UserService;
 import com.miniproject.service.UserServiceImpl;
 
-public class UI {
+public class UserInterFace {
 	UserService userServiceImpl =new UserServiceImpl();
 	Scanner scan=new Scanner(System.in);
 	public void welcomeMessage() {
@@ -57,12 +57,9 @@ public class UI {
 			}
 			else {
 				System.out.println("choose any from below");
-				System.out.println("1.Generate Claim Report 2.Create Role");
-				
-				
+				System.out.println("1.Generate Claim Report 2.Create Role");	
+				adminFunctionality(scan.nextInt());
 			}
-			
-				
 		}
 		else {
 			System.out.println("Login Failed please check your username, password and UserRole");
@@ -73,10 +70,16 @@ public class UI {
 		int accountNumber = 0;
 		int policyNumber = 0;
 		if(choice==1) {
-			System.out.println("Your Account number is "+userServiceImpl.getAccountNumber(username));
+			
 			accountNumber=userServiceImpl.getAccountNumber(username);
 			policyNumber=userServiceImpl.userPolicyNumber(accountNumber);
+			int isClaimPresent=userServiceImpl.checkForClaim(policyNumber);
+			if(isClaimPresent==0) {
 			noteClaimDetailsForInsured(policyNumber);
+			}
+			else {
+				System.out.println("Claim is Already created on this "+policyNumber+" PolicyNumber");
+			}
 		}
 		else if(choice==2) {
 			accountNumber=userServiceImpl.getAccountNumber(username);
@@ -141,29 +144,45 @@ public class UI {
 			
 		}
 		else if(choice==2) {
-			System.out.println("Please Enter your Customer's  Username");
-			String username=scan.next();
+			 userServiceImpl.getCustomersByAgent(agentName);
+			 System.out.println("Please Enter Customer's  Username whose Claim would you like to view");
+			 String username=scan.next();
 			 accountNumber=userServiceImpl.getAccountNumber(username);
 			 policyNumber=userServiceImpl.userPolicyNumber(accountNumber);
-			 System.out.println("Customer with username : "+username+" having Account Number : "+accountNumber+" Policy Number : "+policyNumber);
-			 isClaimPresent=userServiceImpl.checkForClaim(policyNumber);
-			 if(isClaimPresent==1) {
-				 userServiceImpl.getClaim(policyNumber);
+			 int isUserValid=userServiceImpl.getAgentName(username, agentName);
+			 if(isUserValid==1) {
+				 System.out.println("Customer with username : "+username+" having Account Number : "+accountNumber+" Policy Number : "+policyNumber);
+				 isClaimPresent=userServiceImpl.checkForClaim(policyNumber);
+				 if(isClaimPresent==1) {
+					 userServiceImpl.getClaim(policyNumber);
+				 }
+				 else {
+					 System.out.println("There is no Claim Generated");
+				 }
 			 }
 			 else {
-				 System.out.println("There is no Claim Generated");
+				 System.out.println(username+" is not your customer");
 			 }
-			  
+			 
 			 
 			
-		}else {
+		}
+		else {
 			System.out.println("Please Choose Proper option");
+		}
 	}
-	
-}//END OF AGENT FUNCTIONALITY
+//END OF AGENT FUNCTIONALITY
 //BEGIN OF ADMIN FUNCTIONALITY
-	public void AdminFunctionality() {
-		
+	public void adminFunctionality(int choice) {
+		if(choice==1) {
+			userServiceImpl.getAllClaims();
+			 System.out.println("Please Enter PolicyNumber of the Claim on which you want to generate the Report");
+			 int policyNumber=scan.nextInt();
+			 userServiceImpl.getPolicyDetails(policyNumber);
+			 
+			 
+			 
+		}
 	}
 }
 

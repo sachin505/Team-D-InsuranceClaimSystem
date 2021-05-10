@@ -9,4 +9,9 @@ public interface UserService {
 	public abstract void getClaim(int policyNum);
 	public abstract int getAgentName(String customerName, String agentName);
 	public abstract int checkForClaim(int policyNumber);
+	public abstract void getAllClaims();
+	public abstract void getCustomersByAgent(String agentName);
+	public abstract void generateClaimReport(int policyNumber);
+	public abstract void getPolicyDetails(int policyNumber);
+	
 }
