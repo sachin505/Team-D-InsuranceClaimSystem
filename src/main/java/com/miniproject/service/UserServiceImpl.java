@@ -12,7 +12,7 @@ import com.miniproject.entities.UserRole;
 
 public class UserServiceImpl implements UserService {
 	UserRoledao userRoledaoImpl= new UserRoledaoImpl();
-	
+		
 	@Override
 	public int userLogin(String userName,String password,String roleCode) {
 		List<UserRole>list=userRoledaoImpl.loginUser(userName,password,roleCode);

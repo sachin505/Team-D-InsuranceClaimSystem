@@ -1,14 +1,13 @@
 package com.miniproject.service;
 
 import java.util.Scanner;
-
 import org.apache.log4j.Logger;
-
 import com.miniproject.entities.Account;
 import com.miniproject.entities.UserRole;
 
 public class UserInterFace {
 	static Logger log = Logger.getLogger(UserInterFace.class.getName());
+	static Logger log2 = Logger.getLogger(UserInterFace.class.getName());
 	
 	UserService userServiceImpl =new UserServiceImpl();
 	Scanner scan=new Scanner(System.in);
@@ -94,19 +93,20 @@ public class UserInterFace {
 		String accidentState=null;
 		int accidentZip=0;
 		String claimType=null;
-		System.out.println("Please Enter your Claim Reason");
 		scan.nextLine();
+		System.out.println("Please Enter your Claim Reason");
 		claimReason=scan.nextLine();
 		System.out.println("Please Enter your AccidentLocationStreet");
-		accidentLocationStreet=scan.next();
+		accidentLocationStreet=scan.nextLine();
 		System.out.println("Please Enter your AccidentCity");
-		accidentCity=scan.next();
+		accidentCity=scan.nextLine();
 		System.out.println("Please Enter your AccidentState");
-		accidentState=scan.next();
+		accidentState=scan.nextLine();
 		System.out.println("Please Enter your AccidentZip");
 		accidentZip=Integer.parseInt(scan.next());
+		scan.nextLine();
 		System.out.println("Please Enter your claimType");
-		claimType=scan.next();
+		claimType=scan.nextLine();
 		userServiceImpl.createClaim(claimReason, accidentLocationStreet, accidentCity, accidentState, accidentZip, claimType, policyNumber);
 	}
 
@@ -122,7 +122,6 @@ public class UserInterFace {
 			System.out.println("Please Enter your Customer's Username");
 			String username=scan.next();
 			 int result=userServiceImpl.getAgentName(username,agentName);
-			
 			 if(result==1) {
 				  accountNumber=userServiceImpl.getAccountNumber(username);
 				  policyNumber=userServiceImpl.userPolicyNumber(accountNumber);
@@ -135,12 +134,12 @@ public class UserInterFace {
 				 }
 				 else {
 					 noteClaimDetailsForInsured(policyNumber);
+					 log2.debug("Claim created :"+policyNumber);
 				 }
 			 }
 			 else {
 				 System.out.println("Please enter your customers name");
 			 }
-			
 		}
 		else if(choice==2) {
 			 userServiceImpl.getCustomersByAgent(agentName);

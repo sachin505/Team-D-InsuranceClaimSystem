@@ -1,6 +1,5 @@
 package com.miniproject.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -8,17 +7,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name="Account")
 public class Account {
+	
+	// declaration of instance variables
 	@Id
 	private int accountNumber;
 	private String userName;
 	private String agentName;
 	
-	public int getAccountNumber() {
-		return accountNumber;
-	}
-	public void setAccountNumber(int accountNumber) {
-		this.accountNumber = accountNumber;
-	}
+	
 	@Override
 	public String toString() {
 		return "Account [accountNumber=" + accountNumber + ", userName=" + userName + ", agentName=" + agentName + "]";
@@ -41,6 +37,11 @@ public class Account {
 	public void setAgentName(String agentName) {
 		this.agentName = agentName;
 	}
-	
+	public int getAccountNumber() {
+		return accountNumber;
+	}
+	public void setAccountNumber(int accountNumber) {
+		this.accountNumber = accountNumber;
+	}
 	
 }
