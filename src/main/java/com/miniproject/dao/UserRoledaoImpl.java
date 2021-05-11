@@ -51,8 +51,8 @@ public class UserRoledaoImpl implements UserRoledao{
 			Query query=em.createQuery("select policy from Policy policy where policy.accountNumber=:accountnumber");
 			query.setParameter("accountnumber",accNum);
 			policyNumber=(Policy) query.getSingleResult();
-			}
-			catch(Exception e) {
+		}
+		catch(Exception e) {
 				System.out.println("There is no Policy for this user");
 			}	
 		return policyNumber.getPolicyNumber();
@@ -71,10 +71,18 @@ public class UserRoledaoImpl implements UserRoledao{
 			query.setParameter("usn",username);
 			account=(Account)query.getSingleResult();
 			}
+//			catch(NoResultException e) {
+//				System.out.println("");
+//			}
 			catch(Exception e) {
 				System.out.println(e);
 			}
-		return account.getAccountNumber();
+		if(account!=null) { 
+			return account.getAccountNumber();
+		}
+		else {
+			return 0;
+		}
 	}
 	@Override
 	public Claim getClaim(int policyNumber){
@@ -100,11 +108,18 @@ public class UserRoledaoImpl implements UserRoledao{
 				query.setParameter("usn",customerName);
 				account=(Account)query.getSingleResult();
 				}
-			
-				catch(Exception e) {
-					System.out.println(e);
-				}
-			return account.getAgentName();
+			catch(NoResultException | NullPointerException e) {
+				System.out.println(customerName+" is not your customer.");
+			}
+//				catch(Exception e) {
+//					System.out.println(e);
+//				}
+			if(account!=null) {
+				return account.getAgentName();
+			}
+			else {
+				return " ";
+			}
 	}
 	@Override
 	public int checkForClaim(int policyNumber) {
@@ -122,7 +137,6 @@ public class UserRoledaoImpl implements UserRoledao{
 		catch(Exception e) {
 			isPresent=0;
 		}
-		
 		return isPresent;
 	}
 	@Override
@@ -223,7 +237,6 @@ public class UserRoledaoImpl implements UserRoledao{
 		em.getTransaction().begin();
 		em.persist(account);
 		em.getTransaction().commit();
-		
 	}
 	
 }

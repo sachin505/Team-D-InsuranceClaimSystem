@@ -35,7 +35,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int userPolicyNumber(int accNum) {
-		 return userRoledaoImpl.userPolicyNumber(accNum);	 
+		if(accNum==0) {
+			System.out.println("No account found!");
+			return 0;
+		}
+		else {
+			return userRoledaoImpl.userPolicyNumber(accNum);
+		}
 	}
 
 	
@@ -76,7 +82,7 @@ public class UserServiceImpl implements UserService {
 			return 1;
 		}
 		else {
-		return 0;
+			return 0;
 	}
 }
 

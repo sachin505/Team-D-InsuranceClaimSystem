@@ -1,17 +1,11 @@
 package com.miniproject.service;
 
-import java.util.List;
 import java.util.Scanner;
-
-import com.miniproject.dao.UserRoledao;
-import com.miniproject.dao.UserRoledaoImpl;
 import com.miniproject.entities.Account;
-import com.miniproject.entities.Claim;
 import com.miniproject.entities.UserRole;
-import com.miniproject.service.UserService;
-import com.miniproject.service.UserServiceImpl;
 
 public class UserInterFace {
+	
 	UserService userServiceImpl =new UserServiceImpl();
 	Scanner scan=new Scanner(System.in);
 	public void welcomeMessage() {
@@ -75,7 +69,7 @@ public class UserInterFace {
 			accountNumber=userServiceImpl.getAccountNumber(username);
 			policyNumber=userServiceImpl.userPolicyNumber(accountNumber);
 			int isClaimPresent=userServiceImpl.checkForClaim(policyNumber);
-			if(isClaimPresent==1) {
+			if(isClaimPresent==0) {
 			noteClaimDetailsForInsured(policyNumber);
 			}
 			else {
@@ -119,8 +113,8 @@ public class UserInterFace {
 		 int isClaimPresent=0;
 		if(choice==1) {
 			//Create Claim for their customer
-			
-			System.out.println("Please Enter your Customer's  Username");
+			userServiceImpl.getCustomersByAgent(agentName);
+			System.out.println("Please Enter your Customer's Username");
 			String username=scan.next();
 			 int result=userServiceImpl.getAgentName(username,agentName);
 			
@@ -128,6 +122,7 @@ public class UserInterFace {
 				  accountNumber=userServiceImpl.getAccountNumber(username);
 				  policyNumber=userServiceImpl.userPolicyNumber(accountNumber);
 				  isClaimPresent=userServiceImpl.checkForClaim(policyNumber);
+				  
 				 if(isClaimPresent==1) {
 					 System.out.println("Customer with username : "+username+" having Account Number : "+accountNumber+" Policy Number : "+policyNumber);
 					 System.out.println("The Claim Already Exists ");
@@ -136,11 +131,9 @@ public class UserInterFace {
 				 else {
 					 noteClaimDetailsForInsured(policyNumber);
 				 }
-				 
-				 
 			 }
 			 else {
-				 System.out.println("no he is not your Customer");
+				 System.out.println("Please enter your customers name");
 			 }
 			
 		}
@@ -164,9 +157,6 @@ public class UserInterFace {
 			 else {
 				 System.out.println(username+" is not your customer");
 			 }
-			 
-			 
-			
 		}
 		else {
 			System.out.println("Please Choose Proper option");
