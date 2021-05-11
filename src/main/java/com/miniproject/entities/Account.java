@@ -14,17 +14,18 @@ public class Account {
 	private String userName;
 	private String agentName;
 	
+	// default constructor
+	public Account() {
 	
-	@Override
-	public String toString() {
-		return "Account [accountNumber=" + accountNumber + ", userName=" + userName + ", agentName=" + agentName + "]";
+	// parameterized constructor
 	}
-	public Account() {}
 	public Account(int accountNumber, String userName, String agentName) {
 		this.accountNumber = accountNumber;
 		this.userName = userName;
 		this.agentName = agentName;
 	}
+	
+	// getters and setters for instance variables
 	public String getUserName() {
 		return userName;
 	}
@@ -44,4 +45,9 @@ public class Account {
 		this.accountNumber = accountNumber;
 	}
 	
+	// toString() method 
+	@Override
+	public String toString() {
+		return "Account [accountNumber=" + accountNumber + ", userName=" + userName + ", agentName=" + agentName + "]";
+	}
 }

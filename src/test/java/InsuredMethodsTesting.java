@@ -5,7 +5,7 @@ import javax.persistence.EntityManager;
 
 import org.junit.Test;
 
-import com.miniproject.dao.JPAUtil;
+import com.miniproject.dao.JPAUtility;
 import com.miniproject.dao.UserRoledao;
 import com.miniproject.dao.UserRoledaoImpl;
 import com.miniproject.entities.Claim;
@@ -41,12 +41,12 @@ public class InsuredMethodsTesting {
 //	@Test
 //	public void testAddClaim() {
 //		
-//		EntityManager em = JPAUtil.getEntityManager();
+//		EntityManager entityManager = JPAUtility.getEntityManager();
 //		UserRoledao userRoledaoObj=new UserRoledaoImpl();
 //		Claim objClaim = new Claim(17,"Life","Nagole","Hyd","TS",500096,"Death",1003);
 //		userRoledaoObj.createClaim(objClaim);
-//		assertTrue(em.equals(objClaim));
+//		assertTrue(entityManager.equals(objClaim));
 //		System.out.println("Add");
-//		em.remove(objClaim);
+//		entityManager.remove(objClaim);
 //	}
 }

@@ -8,6 +8,7 @@ import javax.persistence.Table;
 @Table(name="claim")
 public class Claim {
 	
+	// declaration of instance variables
 	@Id
 	private int  claimNumber;
 	private String claimReason;
@@ -18,10 +19,12 @@ public class Claim {
 	private String claimType;
 	private int policyNumber;
 	
+	// default constructor
 	public Claim() {
 		
 	}
 	
+	// parameterized constructor
 	public Claim(int claimNumber, String claimReason, String accidentLocationStreet, String accidentCity,
 			String accidentState, int accidentZip, String claimType, int policyNumber) {
 		this.claimNumber = claimNumber;
@@ -33,12 +36,8 @@ public class Claim {
 		this.claimType = claimType;
 		this.policyNumber = policyNumber;
 	}
-	@Override
-	public String toString() {
-		return "Claim [claimNumber=" + claimNumber + ", claimReason=" + claimReason + ", accidentLocation="
-				+ accidentLocationStreet + ", accidentCity=" + accidentCity + ", accidentState=" + accidentState
-				+ ", accidentZip=" + accidentZip + ", claimType=" + claimType + ", policyNumber=" + policyNumber + "]";
-	}
+	
+	// getters and setters for instance variables
 	public int getClaimNumber() {
 		return claimNumber;
 	}
@@ -88,4 +87,11 @@ public class Claim {
 		this.policyNumber = policyNumber;
 	}
 	
+	// toString() method
+	@Override
+	public String toString() {
+		return "Claim [claimNumber=" + claimNumber + ", claimReason=" + claimReason + ", accidentLocation="
+				+ accidentLocationStreet + ", accidentCity=" + accidentCity + ", accidentState=" + accidentState
+				+ ", accidentZip=" + accidentZip + ", claimType=" + claimType + ", policyNumber=" + policyNumber + "]";
+	}
 }

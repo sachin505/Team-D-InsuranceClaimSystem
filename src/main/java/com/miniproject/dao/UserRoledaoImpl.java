@@ -1,11 +1,10 @@
 package com.miniproject.dao;
 
+// importing java packages
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-
 import com.miniproject.entities.Account;
 import com.miniproject.entities.Claim;
 import com.miniproject.entities.Policy;
@@ -13,67 +12,83 @@ import com.miniproject.entities.PolicyDetails;
 import com.miniproject.entities.Question;
 import com.miniproject.entities.UserRole;
 
-public class UserRoledaoImpl implements UserRoledao{
-	EntityManager em;
+// implementations of methods declared in UserRoledao.java interface
+public class UserRoledaoImpl implements UserRoledao {
+
+	// creating object for EntityManager class
+	EntityManager entityManager;
+
+	// default constructor
 	public UserRoledaoImpl() {
-	em=JPAUtil.getEntityManager();
+		entityManager=JPAUtility.getEntityManager();
 	}
+
+	// getting all users from table User_Role in the form of list
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserRole> getAllUser() {
 		List <UserRole> list=null;
 		try {
-		Query query=em.createQuery("select username from UserRole userrole");
-		list=query.getResultList();
+			Query query=entityManager.createQuery("select username from UserRole userrole");
+			list=query.getResultList();
 		}
 		catch(Exception e) {
 			System.out.println(e);
 		}
 		return list;
 	}
+
+	// getting list of User_Role for login 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserRole> loginUser(String userName,String password,String roleCode) {
 		List<UserRole> users=null;
 		try {
-			Query query=em.createQuery("select userrole from UserRole userrole where userrole.rolecode=:role");
+			Query query=entityManager.createQuery("select userrole from UserRole userrole where userrole.rolecode=:role");
 			query.setParameter("role",roleCode);
-			
 			users=query.getResultList();
-			}
-			catch(Exception e) {
-				System.out.println(e);
-			}
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
 		return users;
 	}
+
+	// getting policy number based on account number
 	@Override
 	public int userPolicyNumber(int accNum) {
 		Policy policyNumber=null;
 		try {
-			Query query=em.createQuery("select policy from Policy policy where policy.accountNumber=:accountnumber");
+			Query query=entityManager.createQuery("select policy from Policy policy where policy.accountNumber=:accountnumber");
 			query.setParameter("accountnumber",accNum);
 			policyNumber=(Policy) query.getSingleResult();
 		}
 		catch(Exception e) {
-				System.out.println("There is no Policy for this user");
-			}	
+			System.out.println("There is no Policy for this user");
+		}	
 		return policyNumber.getPolicyNumber();
 	}
+
+	// creating claim
 	@Override
 	public void createClaim(Claim claim) {
-		em.getTransaction().begin();
-		em.persist(claim);
-		em.getTransaction().commit();
+		entityManager.getTransaction().begin();
+		entityManager.persist(claim);
+		entityManager.getTransaction().commit();
 	}
+
+	// getting account number based on user name
 	@Override
 	public int getAccountNumByUserName(String username) {
-	 Account account=null;
+		Account account=null;
 		try {
-			Query query=em.createQuery("select account from Account account where account.userName=:usn");
+			Query query=entityManager.createQuery("select account from Account account where account.userName=:usn");
 			query.setParameter("usn",username);
 			account=(Account)query.getSingleResult();
-			}
-			catch(Exception e) {
-				System.out.println(e);
-			}
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
 		if(account!=null) { 
 			return account.getAccountNumber();
 		}
@@ -81,11 +96,13 @@ public class UserRoledaoImpl implements UserRoledao{
 			return 0;
 		}
 	}
+
+	// getting claim based on policy number
 	@Override
 	public Claim getClaim(int policyNumber){
 		Claim claim = null;
 		try {
-			Query query = em.createQuery("select claim from Claim claim where claim.policyNumber = :pnum");
+			Query query = entityManager.createQuery("select claim from Claim claim where claim.policyNumber = :pnum");
 			query.setParameter("pnum", policyNumber);
 			claim = (Claim) query.getSingleResult();
 		}
@@ -97,33 +114,34 @@ public class UserRoledaoImpl implements UserRoledao{
 		}
 		return claim;
 	}
+
+	// getting agent name based on customer name
 	@Override
 	public String getAgentName(String customerName) {
-		 Account account=null;
-			try {
-				Query query=em.createQuery("select account from Account account where account.userName=:usn");
-				query.setParameter("usn",customerName);
-				account=(Account)query.getSingleResult();
-				}
-			catch(NoResultException | NullPointerException e) {
-				System.out.println(customerName+" is not your customer.");
-			}
-//				catch(Exception e) {
-//					System.out.println(e);
-//				}
-			if(account!=null) {
-				return account.getAgentName();
-			}
-			else {
-				return " ";
-			}
+		Account account=null;
+		try {
+			Query query=entityManager.createQuery("select account from Account account where account.userName=:usn");
+			query.setParameter("usn",customerName);
+			account=(Account)query.getSingleResult();
+		}
+		catch(NoResultException | NullPointerException e) {
+			System.out.println(customerName+" is not your customer.");
+		}
+		if(account!=null) {
+			return account.getAgentName();
+		}
+		else {
+			return " ";
+		}
 	}
+
+	// checking claim based on policy number
 	@Override
 	public int checkForClaim(int policyNumber) {
 		Claim claim = null;
 		int isPresent=0;
 		try {
-			Query query = em.createQuery("select claim from Claim claim where claim.policyNumber = :pnum");
+			Query query = entityManager.createQuery("select claim from Claim claim where claim.policyNumber = :pnum");
 			query.setParameter("pnum", policyNumber);
 			claim = (Claim) query.getSingleResult();
 			isPresent=1;
@@ -136,104 +154,123 @@ public class UserRoledaoImpl implements UserRoledao{
 		}
 		return isPresent;
 	}
+
+	// getting list of all claims
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Claim> getAllClaims() {
 		List<Claim> claimsList=null;
-		Query query=em.createQuery("select claim from Claim claim");
+		Query query=entityManager.createQuery("select claim from Claim claim");
 		claimsList=query.getResultList();
 		return claimsList;
 	}
+
+	// getting all customers based on agent name in list form
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Account> getCustomersByAgent(String agentName) {
 		List<Account> customersList=null;
 		try {
-			Query query = em.createQuery("select account from Account account where account.agentName = :agentName");
+			Query query = entityManager.createQuery("select account from Account account where account.agentName = :agentName");
 			query.setParameter("agentName", agentName);
 			customersList =query.getResultList();
 		}
 		catch(NoResultException e) {
-		System.out.println(e);
+			System.out.println(e);
 		}
 		catch(Exception e) {
 			System.out.println(e);
 		}
 		return customersList;
 	}
+
+	// getting policy details based on policy number in list form
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<PolicyDetails> getPolicyDetails(int policyNumber) {
 		List<PolicyDetails> policyDetails=null;
 		try {
-			Query query = em.createQuery("select policydetails from PolicyDetails policydetails where policydetails.policyNumber = :policyNumber");
+			Query query = entityManager.createQuery("select policydetails from PolicyDetails policydetails where policydetails.policyNumber = :policyNumber");
 			query.setParameter("policyNumber",policyNumber);
 			policyDetails =query.getResultList();
 		}
 		catch(NoResultException e) {
-		System.out.println(e);
+			System.out.println(e);
 		}
 		catch(Exception e) {
 			System.out.println(e);
 		}
 		return policyDetails;
 	}
+
+	// getting question based on questionId
 	@Override
 	public Question getQuestionByQId(int questionId) {
 		Question question=null;
 		try {
-			Query query = em.createQuery("select question from Question question where question.questionId = :questionId");
+			Query query = entityManager.createQuery("select question from Question question where question.questionId = :questionId");
 			query.setParameter("questionId",questionId);
 			question=(Question) query.getSingleResult();
 		}
 		catch(NoResultException e) {
-		System.out.println(e);
+			System.out.println(e);
 		}
 		catch(Exception e) {
 			System.out.println(e);
 		}
-		
+
 		return question;
 	}
+
+	// adding new user role
 	@Override
 	public void addUserRole(UserRole userRole) {
-		em.getTransaction().begin();
-		em.persist(userRole);
-		em.getTransaction().commit();
+		entityManager.getTransaction().begin();
+		entityManager.persist(userRole);
+		entityManager.getTransaction().commit();
 	}
+
+	// getting list of all agents
+	@SuppressWarnings("unchecked")
 	@Override
-	public List getAllAgents() {
-		List AgentList=null;
+	public List<String> getAllAgents() {
+		List<String> agentList=null;
 		try {
-			Query query = em.createQuery("select distinct agentName from Account account");
-			
-			AgentList=query.getResultList();
+			Query query = entityManager.createQuery("select distinct agentName from Account account");
+			agentList=query.getResultList();
 		}
 		catch(NoResultException e) {
-		System.out.println(e);
+			System.out.println(e);
 		}
 		catch(Exception e) {
 			System.out.println(e);
 		}
-		return AgentList;
+		return agentList;
 	}
+
+	// getting count on account
 	@Override
 	public long getAccountsCount() {
 		long accCount=0;
 		try {
-			Query query = em.createQuery("select count(accountNumber) from Account account");
+			Query query = entityManager.createQuery("select count(accountNumber) from Account account");
 			accCount=(long) query.getSingleResult();
 		}
 		catch(NoResultException e) {
-		System.out.println(e);
+			System.out.println(e);
 		}
 		catch(Exception e) {
 			System.out.println(e);
 		}
 		return accCount;
 	}
+
+	// adding new account
 	@Override
 	public void addAccount(Account account) {
-		em.getTransaction().begin();
-		em.persist(account);
-		em.getTransaction().commit();
+		entityManager.getTransaction().begin();
+		entityManager.persist(account);
+		entityManager.getTransaction().commit();
 	}
-	
+
 }
