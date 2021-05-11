@@ -10,9 +10,13 @@ import com.miniproject.entities.PolicyDetails;
 import com.miniproject.entities.Question;
 import com.miniproject.entities.UserRole;
 
+//Implementations of method declared in UserService Interface
 public class UserServiceImpl implements UserService {
+	
+	//Creating a reference variable for Interface 
 	UserRoledao userRoledaoImpl= new UserRoledaoImpl();
 		
+	// Checking for successful UserLogin
 	@Override
 	public int userLogin(String userName,String password,String roleCode) {
 		List<UserRole>list=userRoledaoImpl.loginUser(userName,password,roleCode);
@@ -30,6 +34,7 @@ public class UserServiceImpl implements UserService {
 		return flag;
 	}
 
+	//// Getting PolicyNumber based on AccountNumber
 	@Override
 	public int userPolicyNumber(int accNum) {
 		if(accNum==0) {
@@ -41,6 +46,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	////Creating the Claim
 	@Override
 	public void createClaim(String claimReason, String accidentLocationStreet, String accidentCity, String accidentState,
 		int accidentZip, String claimType, int policyNumber) {
@@ -50,11 +56,13 @@ public class UserServiceImpl implements UserService {
 		System.out.println("claim created ");
 	}
 
+	////Getting AccountNumber based on UserName
 	@Override
 	public int getAccountNumber(String username) {
 		return userRoledaoImpl.getAccountNumByUserName(username);	
 	}
 
+	////Getting Claim based on PolicyNumber
 	@Override
 	public void getClaim(int policyNum) throws NoResultException {
 		try {
@@ -70,6 +78,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	// Checking For AgentName equal to the name in Database
 	@Override
 	public int getAgentName(String customerName, String agentName) {
 		String agentOfDb=userRoledaoImpl.getAgentName(customerName);
@@ -81,12 +90,14 @@ public class UserServiceImpl implements UserService {
 	}
 }
 
+	//Check For Claim based on PolicyNumber Like Claim was exit or not
 	@Override
 	public int checkForClaim(int policyNumber) {
 		return userRoledaoImpl.checkForClaim(policyNumber);
 		 
 	}
 
+	// Getting all the claims
 	@Override
 	public void getAllClaims() {
 		List<Claim> claimsList=userRoledaoImpl.getAllClaims();
@@ -97,7 +108,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-
+	//Getting customerNames based on agentName
 	@Override
 	public void getCustomersByAgent(String agentName) {
 		List<Account> customersList=userRoledaoImpl.getCustomersByAgent(agentName);
@@ -109,8 +120,10 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	//Generating ClaimReport based on policyNumber
 	@Override
 	public void generateClaimReport(int policyNumber) {
+		@SuppressWarnings("unused")
 		Claim claim=null;
 		try {
 			 claim=userRoledaoImpl.getClaim(policyNumber);
@@ -120,6 +133,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	//Getting PolicyDetails based on policyNumber
 	@Override
 	public void getPolicyDetails(int policyNumber) {
 		int isClaimPresent=userRoledaoImpl.checkForClaim(policyNumber);
@@ -138,24 +152,24 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	@Override
-	public void createUser(String userName, String password, String roleCode) {
-		
-		//System.out.println(usersList.contains(userName));
-	}
-
+	
+	// Getting All Users in the form list
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List getAllUsers() {
 		return userRoledaoImpl.getAllUser();
 	}
 
+	// Checking For the UserName
 	@Override
 	public boolean checkForUserName(String userName) {
+		@SuppressWarnings("rawtypes")
 		List usersList=getAllUsers();
 		return usersList.contains(userName);
 		
 	}
 
+	//Adding User Role to Database
 	@Override
 	public void addUserRole(UserRole userRole) {
 		userRoledaoImpl.addUserRole(userRole);
@@ -163,8 +177,10 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	//Getting AgentList
 	@Override
 	public void getAgentList() {
+		@SuppressWarnings("unchecked")
 		List<String> agentsList=userRoledaoImpl.getAllAgents();
 		int i=1;
 		System.out.println("List of agents");
@@ -176,12 +192,14 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	//Getting Account Count
 	@Override
 	public long getAccountsCount() {
 		return userRoledaoImpl.getAccountsCount();
 		
 	}
 
+	//Adding Account to Database
 	@Override
 	public void addAccount(Account account) {
 		userRoledaoImpl.addAccount(account);

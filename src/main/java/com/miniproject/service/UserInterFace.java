@@ -6,26 +6,43 @@ import com.miniproject.entities.Account;
 import com.miniproject.entities.UserRole;
 
 public class UserInterFace {
+	
+	//Creating Loggers Object
 	static Logger log = Logger.getLogger(UserInterFace.class.getName());
 	static Logger log2 = Logger.getLogger(UserInterFace.class.getName());
 	
+	//Creating a reference variable for Interface 
 	UserService userServiceImpl =new UserServiceImpl();
+	
+	//Creating Scanner Object
 	Scanner scan=new Scanner(System.in);
+	
+	//Creating a method to print Welcome Message
 	public void welcomeMessage() {
 		System.out.println("*************** Welcome to Online Insurance Claim Registration System **************");
 	}
+	
+	//Creating a method for All Project Functionalities
 	public void loginUser() {
 		System.out.println("Login");
 		System.out.println("Please Enter your Username");
+		
+		//Storing UserName from console
 		String username=scan.next();
 		
 		System.out.println("Please Enter your Password");
+		
+		//Storing password from console
 		String password=scan.next();
 		
 		System.out.println("Please choose your UserRole");
 		System.out.println("1. Insured 2.Agent 3.Admin");
+		
+		//Storing the UserRole in Option
 		int option=scan.nextInt();
 		String userrole=null;
+		
+		//Using If else for choosing the userRole
 		if(option==1) {
 			userrole="Insured";
 		}
@@ -39,8 +56,10 @@ public class UserInterFace {
 			System.out.println("Please choose valid role option");
 		}
 		
-		
+		//Storing the data in result 
 		int result=userServiceImpl.userLogin(username, password, userrole);
+		
+		//Using If Else for letting users to select what they need to see the information
 		if(result==1) {
 			log.info(username+" added");
 			System.out.println("Welcome "+username);
@@ -61,11 +80,13 @@ public class UserInterFace {
 			}
 		}
 		else {
-			log.error("Login failed for "+username);
+			log.error("Login failed for "+username); //Using Loggers Method
 			System.out.println("Login Failed please check your username, password and UserRole");
 		}
 		
 	}
+	
+	//Writing all the Insured Functionalities
 	public void insuredFunctionalities(int choice,String username) {
 		int accountNumber = 0;
 		int policyNumber = 0;
@@ -86,6 +107,8 @@ public class UserInterFace {
 			userServiceImpl.getClaim(policyNumber);
 		}
 	}
+	
+	// Storing all the Claim Details for Insured based on Policy Number
 	public void noteClaimDetailsForInsured(int policyNumber) {
 		String claimReason=null;
 		String accidentLocationStreet=null;
@@ -111,11 +134,14 @@ public class UserInterFace {
 	}
 
 	//COMPLETE OF INSURED FUNCTIONALITIES......................
-	//BEGIN OF AGENT FUNCTIONALITIES..............
+	
+	//Writing all theAgent Functionalities
 	public void agentFunctionalities(int choice, String agentName) {
 		 int accountNumber=0;
 		 int policyNumber=0;
 		 int isClaimPresent=0;
+		 
+		 // Using If else for Choosing his role
 		if(choice==1) {
 			//Create Claim for their customer
 			userServiceImpl.getCustomersByAgent(agentName);
@@ -167,7 +193,9 @@ public class UserInterFace {
 		}
 	}
 //END OF AGENT FUNCTIONALITY
-//BEGIN OF ADMIN FUNCTIONALITY
+	
+	
+//Begin of Admin Functionality
 	public void adminFunctionality(int choice) {
 		if(choice==1) {
 			userServiceImpl.getAllClaims();

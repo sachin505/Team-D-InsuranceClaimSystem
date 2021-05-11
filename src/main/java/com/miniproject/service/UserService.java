@@ -1,29 +1,66 @@
 package com.miniproject.service;
 
+//importing java packages
 import java.util.List;
 
 import com.miniproject.entities.Account;
 import com.miniproject.entities.UserRole;
 
+// Only Method declarations are done in Interface
 public interface UserService {
-	public abstract int userLogin(String userName, String password, String roleCode);
-	public abstract int userPolicyNumber(int accNum);
-	public abstract void createClaim(String claimReason, String accidentLocation, String accidentCity, String accidentState,
+	
+	// Checking for successful UserLogin
+	 int userLogin(String userName, String password, String roleCode);
+	
+	// Getting PolicyNumber based on AccountNumber
+	 int userPolicyNumber(int accNum);
+	
+	//Creating the Claim
+	 void createClaim(String claimReason, String accidentLocation, String accidentCity, String accidentState,
 			int accidentZip, String claimType, int policyNumber);
-	public abstract int getAccountNumber(String username);
-	public abstract void getClaim(int policyNum);
-	public abstract int getAgentName(String customerName, String agentName);
-	public abstract int checkForClaim(int policyNumber);
-	public abstract void getAllClaims();
-	public abstract void getCustomersByAgent(String agentName);
-	public abstract void generateClaimReport(int policyNumber);
-	public abstract void getPolicyDetails(int policyNumber);
-	public abstract void createUser(String username,String password,String roleCode);
-	public abstract List getAllUsers();
-	public abstract boolean checkForUserName(String userName);
-	public abstract void addUserRole(UserRole userRole);
-	public abstract void getAgentList();
-	public abstract long getAccountsCount();
-	public abstract void addAccount(Account account);
+	
+	//Getting AccountNumber based on UserName
+	 int getAccountNumber(String username);
+	
+	//Getting Claim based on PolicyNumber
+	 void getClaim(int policyNum);
+	
+	// Checking For AgentName equal to the name in Database
+	 int getAgentName(String customerName, String agentName);
+	
+	//Check For Claim based on PolicyNumber Like Claim was exit or not
+	 int checkForClaim(int policyNumber);
+	
+	// Getting all the claims
+	 void getAllClaims();
+	
+	//Getting customerNames based on agentName
+	 void getCustomersByAgent(String agentName);
+	
+	//Generating ClaimReport based on policyNumber
+	 void generateClaimReport(int policyNumber);
+	
+	//Getting PolicyDetails based on policyNumber
+	void getPolicyDetails(int policyNumber);
+	
+	
+	// Getting All Users in the form list
+	@SuppressWarnings("rawtypes")
+	 List getAllUsers();
+	
+	// Checking For the UserName
+	 boolean checkForUserName(String userName);
+	
+	//Adding User Role to Database
+	 void addUserRole(UserRole userRole);
+	
+	//Getting AgentList
+	 void getAgentList();
+	
+	//Getting Account Count
+	 long getAccountsCount();
+	
+	//Adding Account to Database
+	 void addAccount(Account account);
 	
 }
