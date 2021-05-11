@@ -1,10 +1,14 @@
 package com.miniproject.service;
 
 import java.util.Scanner;
+
+import org.apache.log4j.Logger;
+
 import com.miniproject.entities.Account;
 import com.miniproject.entities.UserRole;
 
 public class UserInterFace {
+	static Logger log = Logger.getLogger(UserInterFace.class.getName());
 	
 	UserService userServiceImpl =new UserServiceImpl();
 	Scanner scan=new Scanner(System.in);
@@ -12,7 +16,6 @@ public class UserInterFace {
 		System.out.println("*************** Welcome to Online Insurance Claim Registration System **************");
 	}
 	public void loginUser() {
-		
 		System.out.println("Login");
 		System.out.println("Please Enter your Username");
 		String username=scan.next();
@@ -40,6 +43,7 @@ public class UserInterFace {
 		
 		int result=userServiceImpl.userLogin(username, password, userrole);
 		if(result==1) {
+			log.info(username+" added");
 			System.out.println("Welcome "+username);
 			if(userrole.equals("Insured")) {
 				System.out.println("choose any from below");
@@ -58,6 +62,7 @@ public class UserInterFace {
 			}
 		}
 		else {
+			log.error("Login failed for "+username);
 			System.out.println("Login Failed please check your username, password and UserRole");
 		}
 		

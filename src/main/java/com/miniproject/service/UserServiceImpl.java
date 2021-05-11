@@ -1,9 +1,7 @@
 package com.miniproject.service;
 
 import java.util.List;
-
 import javax.persistence.NoResultException;
-
 import com.miniproject.dao.UserRoledao;
 import com.miniproject.dao.UserRoledaoImpl;
 import com.miniproject.entities.Account;
@@ -30,7 +28,6 @@ public class UserServiceImpl implements UserService {
 			
 		}
 		return flag;
-		
 	}
 
 	@Override
@@ -44,7 +41,6 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	
 	@Override
 	public void createClaim(String claimReason, String accidentLocationStreet, String accidentCity, String accidentState,
 		int accidentZip, String claimType, int policyNumber) {
@@ -52,7 +48,6 @@ public class UserServiceImpl implements UserService {
 		Claim claimObj=new Claim(claimNumber,claimReason,accidentLocationStreet, accidentCity,accidentState, accidentZip,claimType,policyNumber);
 		userRoledaoImpl.createClaim(claimObj);
 		System.out.println("claim created ");
-		
 	}
 
 	@Override
@@ -96,7 +91,6 @@ public class UserServiceImpl implements UserService {
 	public void getAllClaims() {
 		List<Claim> claimsList=userRoledaoImpl.getAllClaims();
 		System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s%-20s%-20s\n","ClaimNumber","ClaimReason","AccidentLocation","AccidentCity","AccidentState","AccidentZip","ClaimType","PolicyNumber");
-		
 		System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------");
 		for(Claim claim:claimsList) {
 			System.out.printf("%-20d%-20s%-20s%-20s%-20s%-20d%-20s%-20d\n",claim.getClaimNumber(),claim.getClaimReason(),claim.getAccidentLocation(),claim.getAccidentCity(),claim.getAccidentState(),claim.getAccidentZip(),claim.getClaimType(),claim.getPolicyNumber());
@@ -194,7 +188,4 @@ public class UserServiceImpl implements UserService {
 		System.out.println("Account generated");
 	}
 	
-
-	
-
 }

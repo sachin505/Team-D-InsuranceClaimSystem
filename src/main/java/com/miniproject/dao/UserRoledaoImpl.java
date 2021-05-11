@@ -71,9 +71,6 @@ public class UserRoledaoImpl implements UserRoledao{
 			query.setParameter("usn",username);
 			account=(Account)query.getSingleResult();
 			}
-//			catch(NoResultException e) {
-//				System.out.println("");
-//			}
 			catch(Exception e) {
 				System.out.println(e);
 			}
