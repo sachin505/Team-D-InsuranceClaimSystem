@@ -12,6 +12,16 @@ public class UserRole {
 	private String username;
 	private String password;
 	private String rolecode;
+	
+	public UserRole() {
+		
+	}
+	
+	public UserRole(String username, String password, String rolecode) {
+		this.username = username;
+		this.password = password;
+		this.rolecode = rolecode;
+	}
 	@Override
 	public String toString() {
 		return "UserRole [username=" + username + ", password=" + password + ", rolecode=" + rolecode + "]";
@@ -22,6 +32,7 @@ public class UserRole {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
 	public String getPassword() {
 		return password;
 	}

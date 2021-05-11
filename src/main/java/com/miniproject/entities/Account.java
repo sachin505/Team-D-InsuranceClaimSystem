@@ -23,6 +23,12 @@ public class Account {
 	public String toString() {
 		return "Account [accountNumber=" + accountNumber + ", userName=" + userName + ", agentName=" + agentName + "]";
 	}
+	public Account() {}
+	public Account(int accountNumber, String userName, String agentName) {
+		this.accountNumber = accountNumber;
+		this.userName = userName;
+		this.agentName = agentName;
+	}
 	public String getUserName() {
 		return userName;
 	}

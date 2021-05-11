@@ -5,7 +5,9 @@ import java.util.Scanner;
 
 import com.miniproject.dao.UserRoledao;
 import com.miniproject.dao.UserRoledaoImpl;
+import com.miniproject.entities.Account;
 import com.miniproject.entities.Claim;
+import com.miniproject.entities.UserRole;
 import com.miniproject.service.UserService;
 import com.miniproject.service.UserServiceImpl;
 
@@ -176,13 +178,60 @@ public class UserInterFace {
 	public void adminFunctionality(int choice) {
 		if(choice==1) {
 			userServiceImpl.getAllClaims();
-			 System.out.println("Please Enter PolicyNumber of the Claim on which you want to generate the Report");
+			 System.out.println("\nPlease Enter PolicyNumber of the Claim on which you want to generate the Report");
 			 int policyNumber=scan.nextInt();
-			 userServiceImpl.getPolicyDetails(policyNumber);
-			 
-			 
-			 
+			 userServiceImpl.getPolicyDetails(policyNumber);	 
 		}
+		else if (choice==2) {
+			System.out.println("Create User");
+			System.out.println("Please Enter  Username");
+			String userName=scan.next();
+			while(userServiceImpl.checkForUserName(userName)) {
+				System.out.println("UserName Exists please Enter unique UserName");
+				userName=scan.next();
+			};	
+			System.out.println("Please Enter  Password");
+			String password=scan.next();
+			System.out.println("Please choose  UserRole");
+			System.out.println("1. Insured 2.Agent 3.Admin");
+			int option=scan.nextInt();
+			String userrole=null;
+			if(option==1) {
+				userrole="Insured";
+			}
+			else if(option==2) {
+				userrole="Agent";
+			}
+			else if(option==3) {
+				userrole="Admin";
+			}
+			else {
+				System.out.println("Please choose valid role option");
+			}
+			if(userrole.equals("Insured")) {
+				userServiceImpl.getAgentList();
+				System.out.println("Enter an Agent for Insured");
+				String agent=scan.next();
+				UserRole userRoleObj=new UserRole(userName,password,userrole);
+				userServiceImpl.addUserRole(userRoleObj);
+				long numOfAccount=101;
+				int accountNumber=(int)(numOfAccount+userServiceImpl.getAccountsCount());
+				Account accountObj=new Account(accountNumber,userName,agent);
+				System.out.println(accountObj);
+				userServiceImpl.addAccount(accountObj);
+				
+			}
+			else {
+				UserRole userRoleObj=new UserRole(userName,password,userrole);
+				userServiceImpl.addUserRole(userRoleObj);
+			}
+			
+			
+		}
+		else {
+			System.out.println("Please Choose Proper Choice");
+		}
+		
 	}
 }
 

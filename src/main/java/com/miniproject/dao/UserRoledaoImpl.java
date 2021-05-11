@@ -10,6 +10,7 @@ import com.miniproject.entities.Account;
 import com.miniproject.entities.Claim;
 import com.miniproject.entities.Policy;
 import com.miniproject.entities.PolicyDetails;
+import com.miniproject.entities.Question;
 import com.miniproject.entities.UserRole;
 
 public class UserRoledaoImpl implements UserRoledao{
@@ -21,7 +22,7 @@ public class UserRoledaoImpl implements UserRoledao{
 	public List<UserRole> getAllUser() {
 		List <UserRole> list=null;
 		try {
-		Query query=em.createQuery("select userrole from UserRole userrole");
+		Query query=em.createQuery("select username from UserRole userrole");
 		list=query.getResultList();
 		}
 		catch(Exception e) {
@@ -45,16 +46,16 @@ public class UserRoledaoImpl implements UserRoledao{
 	}
 	@Override
 	public int userPolicyNumber(int accNum) {
-		Policy policynumber=null;
+		int policyNumber=0;
 		try {
 			Query query=em.createQuery("select policy from Policy policy where policy.accountNumber=:accountnumber");
 			query.setParameter("accountnumber",accNum);
-			 policynumber= (Policy) query.getSingleResult();
+			Policy policynumber=(Policy) query.getSingleResult();
 			}
 			catch(Exception e) {
-				System.out.println(e);
+				System.out.println("There is no Policy for this user");
 			}	
-		return policynumber.getPolicyNumber();
+		return policyNumber;
 	}
 	@Override
 	public void createClaim(Claim claim) {
@@ -76,12 +77,15 @@ public class UserRoledaoImpl implements UserRoledao{
 		return account.getAccountNumber();
 	}
 	@Override
-	public Claim getClaim(int policyNumber)throws Exception,NoResultException {
+	public Claim getClaim(int policyNumber){
 		Claim claim = null;
 		try {
 			Query query = em.createQuery("select claim from Claim claim where claim.policyNumber = :pnum");
 			query.setParameter("pnum", policyNumber);
 			claim = (Claim) query.getSingleResult();
+		}
+		catch(NoResultException e) {
+			System.out.println("Choose a valid policy Number");
 		}
 		catch(Exception e) {
 			System.out.println(e);
@@ -159,6 +163,67 @@ public class UserRoledaoImpl implements UserRoledao{
 			System.out.println(e);
 		}
 		return policyDetails;
+	}
+	@Override
+	public Question getQuestionByQId(int questionId) {
+		Question question=null;
+		try {
+			Query query = em.createQuery("select question from Question question where question.questionId = :questionId");
+			query.setParameter("questionId",questionId);
+			question=(Question) query.getSingleResult();
+		}
+		catch(NoResultException e) {
+		System.out.println(e);
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+		
+		return question;
+	}
+	@Override
+	public void addUserRole(UserRole userRole) {
+		em.getTransaction().begin();
+		em.persist(userRole);
+		em.getTransaction().commit();
+	}
+	@Override
+	public List getAllAgents() {
+		List AgentList=null;
+		try {
+			Query query = em.createQuery("select distinct agentName from Account account");
+			
+			AgentList=query.getResultList();
+		}
+		catch(NoResultException e) {
+		System.out.println(e);
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+		return AgentList;
+	}
+	@Override
+	public long getAccountsCount() {
+		long accCount=0;
+		try {
+			Query query = em.createQuery("select count(accountNumber) from Account account");
+			accCount=(long) query.getSingleResult();
+		}
+		catch(NoResultException e) {
+		System.out.println(e);
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+		return accCount;
+	}
+	@Override
+	public void addAccount(Account account) {
+		em.getTransaction().begin();
+		em.persist(account);
+		em.getTransaction().commit();
+		
 	}
 	
 }
