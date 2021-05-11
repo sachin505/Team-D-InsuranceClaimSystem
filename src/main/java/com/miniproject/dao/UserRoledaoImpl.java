@@ -46,16 +46,16 @@ public class UserRoledaoImpl implements UserRoledao{
 	}
 	@Override
 	public int userPolicyNumber(int accNum) {
-		int policyNumber=0;
+		Policy policyNumber=null;
 		try {
 			Query query=em.createQuery("select policy from Policy policy where policy.accountNumber=:accountnumber");
 			query.setParameter("accountnumber",accNum);
-			Policy policynumber=(Policy) query.getSingleResult();
+			policyNumber=(Policy) query.getSingleResult();
 			}
 			catch(Exception e) {
 				System.out.println("There is no Policy for this user");
 			}	
-		return policyNumber;
+		return policyNumber.getPolicyNumber();
 	}
 	@Override
 	public void createClaim(Claim claim) {

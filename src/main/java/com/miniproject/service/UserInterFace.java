@@ -72,11 +72,10 @@ public class UserInterFace {
 		int accountNumber = 0;
 		int policyNumber = 0;
 		if(choice==1) {
-			
 			accountNumber=userServiceImpl.getAccountNumber(username);
 			policyNumber=userServiceImpl.userPolicyNumber(accountNumber);
 			int isClaimPresent=userServiceImpl.checkForClaim(policyNumber);
-			if(isClaimPresent==0) {
+			if(isClaimPresent==1) {
 			noteClaimDetailsForInsured(policyNumber);
 			}
 			else {
