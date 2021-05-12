@@ -11,6 +11,8 @@ import com.miniproject.entities.Policy;
 import com.miniproject.entities.PolicyDetails;
 import com.miniproject.entities.Question;
 import com.miniproject.entities.UserRole;
+import com.miniproject.exception.AccountException;
+import com.miniproject.exception.PolicyException;
 
 // implementations of methods declared in UserRoledao.java interface
 public class UserRoledaoImpl implements UserRoledao {
@@ -56,15 +58,15 @@ public class UserRoledaoImpl implements UserRoledao {
 
 	// getting policy number based on account number
 	@Override
-	public int userPolicyNumber(int accNum) {
+	public int userPolicyNumber(int accNum) throws PolicyException{
 		Policy policyNumber=null;
 		try {
 			Query query=entityManager.createQuery("select policy from Policy policy where policy.accountNumber=:accountnumber");
 			query.setParameter("accountnumber",accNum);
 			policyNumber=(Policy) query.getSingleResult();
 		}
-		catch(Exception e) {
-			System.out.println("There is no Policy for this user");
+		catch(NullPointerException |NoResultException exception) {
+			throw new PolicyException("No Policy Created");
 		}	
 		return policyNumber.getPolicyNumber();
 	}
@@ -79,22 +81,18 @@ public class UserRoledaoImpl implements UserRoledao {
 
 	// getting account number based on user name
 	@Override
-	public int getAccountNumByUserName(String username) {
+	public int getAccountNumByUserName(String username) throws AccountException {
 		Account account=null;
 		try {
 			Query query=entityManager.createQuery("select account from Account account where account.userName=:usn");
 			query.setParameter("usn",username);
 			account=(Account)query.getSingleResult();
 		}
-		catch(Exception e) {
-			System.out.println(e);
+		catch(NullPointerException | NoResultException e) {
+			throw new AccountException("NO Account Found");
 		}
-		if(account!=null) { 
-			return account.getAccountNumber();
-		}
-		else {
-			return 0;
-		}
+		
+		return account.getAccountNumber();
 	}
 
 	// getting claim based on policy number

@@ -9,6 +9,8 @@ import com.miniproject.entities.Claim;
 import com.miniproject.entities.PolicyDetails;
 import com.miniproject.entities.Question;
 import com.miniproject.entities.UserRole;
+import com.miniproject.exception.AccountException;
+import com.miniproject.exception.PolicyException;
 
 //Implementations of method declared in UserService Interface
 public class UserServiceImpl implements UserService {
@@ -36,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
 	//// Getting PolicyNumber based on AccountNumber
 	@Override
-	public int userPolicyNumber(int accNum) {
+	public int userPolicyNumber(int accNum) throws PolicyException {
 		if(accNum==0) {
 			System.out.println("No account found!");
 			return 0;
@@ -58,8 +60,10 @@ public class UserServiceImpl implements UserService {
 
 	////Getting AccountNumber based on UserName
 	@Override
-	public int getAccountNumber(String username) {
-		return userRoledaoImpl.getAccountNumByUserName(username);	
+	public int getAccountNumber(String username) throws AccountException{
+		int accountNumber=0;
+		accountNumber=userRoledaoImpl.getAccountNumByUserName(username);
+		return accountNumber;
 	}
 
 	////Getting Claim based on PolicyNumber

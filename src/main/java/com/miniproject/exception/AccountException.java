@@ -1,12 +1,10 @@
 package com.miniproject.exception;
 
-@SuppressWarnings("serial")
-//Public Class Extending Exception Class
-public class PolicyException extends Exception {
+public class AccountException extends Exception {
 	//Instance Variable
 	public String message;
 	//Parameterized Constructor
-	public PolicyException(String msg) {
+	public AccountException(String msg) {
 		this.message=msg;
 	}
 	// toString() Method
@@ -14,6 +12,4 @@ public class PolicyException extends Exception {
 	public String toString() {
 		return message;
 	}
-	
-	
 }

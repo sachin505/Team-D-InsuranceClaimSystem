@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.miniproject.entities.Account;
 import com.miniproject.entities.UserRole;
+import com.miniproject.exception.AccountException;
+import com.miniproject.exception.PolicyException;
 
 // Only Method declarations are done in Interface
 public interface UserService {
@@ -13,14 +15,14 @@ public interface UserService {
 	 int userLogin(String userName, String password, String roleCode);
 	
 	// Getting PolicyNumber based on AccountNumber
-	 int userPolicyNumber(int accNum);
+	 int userPolicyNumber(int accNum) throws PolicyException;
 	
 	//Creating the Claim
 	 void createClaim(String claimReason, String accidentLocation, String accidentCity, String accidentState,
 			int accidentZip, String claimType, int policyNumber);
 	
 	//Getting AccountNumber based on UserName
-	 int getAccountNumber(String username);
+	 int getAccountNumber(String username) throws AccountException;
 	
 	//Getting Claim based on PolicyNumber
 	 void getClaim(int policyNum);

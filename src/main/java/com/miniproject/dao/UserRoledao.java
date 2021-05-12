@@ -7,6 +7,8 @@ import com.miniproject.entities.Claim;
 import com.miniproject.entities.PolicyDetails;
 import com.miniproject.entities.Question;
 import com.miniproject.entities.UserRole;
+import com.miniproject.exception.AccountException;
+import com.miniproject.exception.PolicyException;
 
 // only method declarations are done in interface
 public interface UserRoledao {
@@ -17,13 +19,13 @@ public interface UserRoledao {
 	public List<UserRole> loginUser(String userName,String password,String roleCode); 	// getting list of User_Role for login 
 
 
-	public int userPolicyNumber(int accNum); // getting policy number based on account number
+	public int userPolicyNumber(int accNum) throws PolicyException; // getting policy number based on account number
 
 
 	public void createClaim(Claim claim); // creating claim
 
 
-	public int getAccountNumByUserName(String username); // getting account number based on user name
+	public int getAccountNumByUserName(String username) throws AccountException; // getting account number based on user name
 
 
 	public Claim getClaim(int policyNumber) ; // getting claim based on policy number

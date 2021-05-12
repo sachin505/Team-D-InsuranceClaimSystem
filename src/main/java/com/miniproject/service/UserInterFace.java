@@ -4,6 +4,8 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 import com.miniproject.entities.Account;
 import com.miniproject.entities.UserRole;
+import com.miniproject.exception.AccountException;
+import com.miniproject.exception.PolicyException;
 
 public class UserInterFace {
 	
@@ -23,7 +25,7 @@ public class UserInterFace {
 	}
 	
 	//Creating a method for All Project Functionalities
-	public void loginUser() {
+	public void loginUser()  {
 		System.out.println("Login");
 		System.out.println("Please Enter your Username");
 		
@@ -87,12 +89,25 @@ public class UserInterFace {
 	}
 	
 	//Writing all the Insured Functionalities
-	public void insuredFunctionalities(int choice,String username) {
+	public void insuredFunctionalities(int choice,String username){
 		int accountNumber = 0;
 		int policyNumber = 0;
 		if(choice==1) {
-			accountNumber=userServiceImpl.getAccountNumber(username);
+			
+			try {
+				accountNumber=userServiceImpl.getAccountNumber(username);
+			} catch (AccountException e1) {
+				// TODO Auto-generated catch block
+				System.out.println(e1);
+				return;
+			}
+			try {
 			policyNumber=userServiceImpl.userPolicyNumber(accountNumber);
+			}
+			catch(PolicyException e) {
+				System.out.println(e);
+				return;
+			}
 			int isClaimPresent=userServiceImpl.checkForClaim(policyNumber);
 			if(isClaimPresent==0) {
 			noteClaimDetailsForInsured(policyNumber);
@@ -102,9 +117,23 @@ public class UserInterFace {
 			}
 		}
 		else if(choice==2) {
-			accountNumber=userServiceImpl.getAccountNumber(username);
+			
+			try {
+				accountNumber=userServiceImpl.getAccountNumber(username);
+			} catch (AccountException e1) {
+				//  catch block
+				System.out.println(e1);
+				return;
+			}
+			try {
 			policyNumber=userServiceImpl.userPolicyNumber(accountNumber);
+			}catch(PolicyException e) {
+				System.out.println(e);
+			}
 			userServiceImpl.getClaim(policyNumber);
+		}
+		else {
+			System.out.println("Please select proper option");
 		}
 	}
 	
@@ -126,7 +155,17 @@ public class UserInterFace {
 		System.out.println("Please Enter your AccidentState");
 		accidentState=scan.nextLine();
 		System.out.println("Please Enter your AccidentZip");
+		accidentZip=0;
+		int i=0;
+		while(i==0) {
+		try {
 		accidentZip=Integer.parseInt(scan.next());
+		i=1;
+		}
+		catch(NumberFormatException e) {
+			System.out.println("Input Type MisMatch please Enter a Number");
+		}
+		}
 		scan.nextLine();
 		System.out.println("Please Enter your claimType");
 		claimType=scan.nextLine();
@@ -149,8 +188,19 @@ public class UserInterFace {
 			String username=scan.next();
 			 int result=userServiceImpl.getAgentName(username,agentName);
 			 if(result==1) {
-				  accountNumber=userServiceImpl.getAccountNumber(username);
+				 
+				  try {
+					accountNumber=userServiceImpl.getAccountNumber(username);
+				} catch (AccountException e1) {
+					System.out.println(e1);
+					return;
+				}
+				  try {
 				  policyNumber=userServiceImpl.userPolicyNumber(accountNumber);
+				  }catch(PolicyException e) {
+					  System.out.println(e);
+					  return;
+				  }
 				  isClaimPresent=userServiceImpl.checkForClaim(policyNumber);
 				  
 				 if(isClaimPresent==1) {
@@ -171,8 +221,19 @@ public class UserInterFace {
 			 userServiceImpl.getCustomersByAgent(agentName);
 			 System.out.println("Please Enter Customer's  Username whose Claim would you like to view");
 			 String username=scan.next();
-			 accountNumber=userServiceImpl.getAccountNumber(username);
+			 try {
+				accountNumber=userServiceImpl.getAccountNumber(username);
+			} catch (AccountException e1) {
+				System.out.println(e1);
+				return;
+				
+			}
+			 try {
 			 policyNumber=userServiceImpl.userPolicyNumber(accountNumber);
+			 }
+			 catch(PolicyException e) {
+				 System.out.println(e);
+			 }
 			 int isUserValid=userServiceImpl.getAgentName(username, agentName);
 			 if(isUserValid==1) {
 				 System.out.println("Customer with username : "+username+" having Account Number : "+accountNumber+" Policy Number : "+policyNumber);

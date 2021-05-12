@@ -1,5 +1,6 @@
 package com.miniproject.pl;
 
+import com.miniproject.exception.PolicyException;
 import com.miniproject.service.UserInterFace;
 
 public class Client {
