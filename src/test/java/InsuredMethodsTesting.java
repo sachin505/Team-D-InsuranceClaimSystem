@@ -5,6 +5,8 @@ import org.junit.Test;
 
 import com.miniproject.dao.UserRoledao;
 import com.miniproject.dao.UserRoledaoImpl;
+import com.miniproject.exception.AccountException;
+import com.miniproject.exception.PolicyException;
 
 
 
@@ -12,14 +14,14 @@ public class InsuredMethodsTesting {
 	
 	// Test Method for Checking PolicyNumber 
 	@Test
-	public void testUserPolicyNumber() {
+	public void testUserPolicyNumber() throws PolicyException{
 		UserRoledao user=new UserRoledaoImpl();
 		assertEquals(1001,user.userPolicyNumber(101));
 	}
 	
 	// Test Method for Checking Getting AccountNumber By using UserName
 	@Test
-	public void testGetAccountNumberByUserName() {
+	public void testGetAccountNumberByUserName() throws AccountException {
 		UserRoledao user=new UserRoledaoImpl();
 		assertEquals(101,user.getAccountNumByUserName("Mark"));
 	}
@@ -40,7 +42,7 @@ public class InsuredMethodsTesting {
 	
 	//TestMethod for Checking to get the AccountNumber based on UserName
 	@Test
-	public void testGetAccountNumByUserName() {
+	public void testGetAccountNumByUserName() throws AccountException {
 		UserRoledao user=new UserRoledaoImpl();
 		assertEquals(101,user.getAccountNumByUserName("Mark"));
 	}
